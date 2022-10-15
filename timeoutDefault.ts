@@ -18,7 +18,7 @@ export function timeoutDefault(ms: number, defaultVal: any, filterFunc?: Functio
 
                     if (!filterFunc) {
                         // no filter func, next the value anyways
-                        clearTimeout();
+                        clearTimeout(timeout);
                         subscriber.next(value);
                         return;
                     }
