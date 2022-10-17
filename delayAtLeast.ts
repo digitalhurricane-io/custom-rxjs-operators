@@ -1,15 +1,15 @@
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 // If target arg is equal to === the ommited value, it will not be ommited to the observer until 
 // at least ms have passed since the last emission. Useful for making loading bars or 
 // spinners take a minimum amount of time.
 export function delayAtLeast(target: any, ms: number) {
-  	let lastEmissionTime = (new Date()).getTime();
+	let lastEmissionTime = (new Date()).getTime();
 
-  	return function <T>(source$: Observable<T>): Observable<T> {
-    	return new Observable(subscriber => {
-      		return source$.subscribe({
-        		next(value) {
+	return function <T>(source$: Observable<T>): Observable<T> {
+		return new Observable(subscriber => {
+			return source$.subscribe({
+				next(value) {
 
 					const now = (new Date()).getTime();
 
@@ -35,7 +35,7 @@ export function delayAtLeast(target: any, ms: number) {
 				complete() {
 					subscriber.complete();
 				},
-      		});
-    	});
-  	};
+			});
+		});
+	};
 }
