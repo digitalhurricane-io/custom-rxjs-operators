@@ -5,38 +5,38 @@ import { Observable } from "rxjs";
 // send a default value
 export function timeoutDefault(ms: number, defaultVal: any, filterFunc?: Function) {
 
-    return function <T>(source$: Observable<T>): Observable<T> {
+   return function <T>(source$: Observable<T>): Observable<T> {
 
-        return new Observable(subscriber => {
+      return new Observable(subscriber => {
 
-            const timeout = setTimeout(() => {
-                subscriber.next(defaultVal);
-            }, ms);
+         const timeout = setTimeout(() => {
+            subscriber.next(defaultVal);
+         }, ms);
 
-            return source$.subscribe({
-                next(value) {
+         return source$.subscribe({
+            next(value) {
 
-                    if (!filterFunc) {
-                        // no filter func, next the value anyways
-                        clearTimeout(timeout);
-                        subscriber.next(value);
-                        return;
-                    }
+               if (!filterFunc) {
+                  // no filter func, next the value anyways
+                  clearTimeout(timeout);
+                  subscriber.next(value);
+                  return;
+               }
 
-                    if(filterFunc(value)) {
-                        // passed filter
-                        clearTimeout(timeout);
-                        subscriber.next(value);
-                    }
+               if (filterFunc(value)) {
+                  // passed filter
+                  clearTimeout(timeout);
+                  subscriber.next(value);
+               }
 
-                },
-                error(error) {
-                    subscriber.error(error);
-                },
-                complete() {
-                    subscriber.complete();
-                }
-            });
-        });
-    }
+            },
+            error(error) {
+               subscriber.error(error);
+            },
+            complete() {
+               subscriber.complete();
+            }
+         });
+      });
+   }
 }
